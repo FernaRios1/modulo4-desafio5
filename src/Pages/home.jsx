@@ -1,7 +1,7 @@
 import Header from './header';
 import CardPizza from "./cardpizza";
 
-const Home = ({ pizzas, addToCart }) => {
+const Home = ({ pizzas }) => {
   return (
     <div>
       <Header />
@@ -10,7 +10,7 @@ const Home = ({ pizzas, addToCart }) => {
         <div className="row">
           {pizzas.map((pizza) => (
             <div key={pizza.id} className="col-md-4 mb-4">
-              <CardPizza pizza={pizza} addToCart={addToCart} />
+              <CardPizza pizza={pizza} />
             </div>
           ))}
         </div>

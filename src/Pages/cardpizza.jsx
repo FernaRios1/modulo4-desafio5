@@ -1,28 +1,20 @@
-import { Link } from "react-router-dom"; // Asegúrate de tener esto al inicio
+import { useCart } from "./CartContext";
 
-const CardPizza = ({ pizza, addToCart }) => {
-  const { id, name, price, ingredients, img } = pizza;
+const CardPizza = ({ pizza }) => {
+  const { addToCart } = useCart();
 
   return (
     <div className="card">
-      <img src={img} className="card-img-top" alt={name} />
+      <img src={pizza.img} alt={pizza.name} className="card-img-top" />
       <div className="card-body">
-        <h5 className="card-title">{name}</h5>
-        <ul>
-          {ingredients.map((ing, i) => (
-            <li key={i}>{ing}</li>
-          ))}
-        </ul>
-        <p className="card-text">Precio: ${price.toLocaleString()}</p>
-        <Link to={`/pizza/${id}`} className="btn btn-outline-primary">
-          Ver más 🍕
-        </Link>
-        <button className="btn btn-primary mt-2" onClick={() => addToCart(pizza)}>
-          Agregar al carrito
+        <h5 className="card-title">{pizza.name}</h5>
+        <p className="card-text">${pizza.price.toLocaleString()}</p>
+        <button className="btn btn-primary" onClick={() => addToCart(pizza)}>
+          Añadir
         </button>
       </div>
     </div>
   );
 };
 
-export default CardPizza; // 👈 Esto es lo que te faltaba
+export default CardPizza;

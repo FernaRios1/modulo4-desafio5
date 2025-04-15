@@ -1,11 +1,20 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import pizzas from "./pizzas";
+import { useCart } from "./CartContext";
 
-const PizzaDetail = ({ addToCart }) => {
+const PizzaDetail = () => {
   const { id } = useParams();
-  const pizza = pizzas.find((p) => p.id === parseInt(id));
+  const { addToCart } = useCart();
+  const [pizza, setPizza] = useState(null);
 
-  if (!pizza) return <p>Pizza no encontrada</p>;
+  useEffect(() => {
+    fetch(`http://localhost:5002/pizzas/${id}`)
+      .then((res) => res.json())
+      .then((data) => setPizza(data))
+      .catch((err) => console.error("Error al cargar pizza:", err));
+  }, [id]);
+
+  if (!pizza) return <p>Cargando pizza...</p>;
 
   return (
     <div className="container mt-4">
@@ -15,7 +24,7 @@ const PizzaDetail = ({ addToCart }) => {
           <h2 className="card-title">{pizza.name}</h2>
           <p>Ingredientes:</p>
           <ul>
-            {pizza.ingredients.map((i, idx) => <li key={idx}> {i}</li>)}
+            {pizza.ingredients.map((i, idx) => <li key={idx}>{i}</li>)}
           </ul>
           <h4 className="mt-3">Precio: ${pizza.price.toLocaleString()}</h4>
           <button className="btn btn-success mt-3" onClick={() => addToCart(pizza)}>

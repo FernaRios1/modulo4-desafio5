@@ -1,5 +1,7 @@
-const Cart = ({ cart, addToCart, removeFromCart }) => {
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+import { useCart } from "./CartContext";
+
+const Cart = () => {
+  const { cart, addToCart, removeFromCart, total } = useCart();
 
   return (
     <div className="container mt-4">
